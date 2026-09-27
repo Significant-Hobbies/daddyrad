@@ -8,7 +8,7 @@ function secure(response) {
   const result = new Response(response.body, response);
   result.headers.set('X-Content-Type-Options', 'nosniff');
   result.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  result.headers.set('Content-Security-Policy', "default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src https://sassmaker.com; connect-src https://sassmaker.com; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
+  result.headers.set('Content-Security-Policy', "default-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' https://sassmaker.com; connect-src 'self' https://sassmaker.com https://ingest.sassmaker.com; base-uri 'none'; form-action 'none'; frame-ancestors 'none'");
   return result;
 }
 export default {
