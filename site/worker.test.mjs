@@ -7,6 +7,10 @@ const env = { ASSETS: { fetch: (request) => Promise.resolve(new Response('asset'
 test('apex serves assets', async () => {
   const res = await worker.fetch(new Request('https://daddyrad.com/'), env);
   assert.equal(res.status, 200);
+  const csp = res.headers.get('Content-Security-Policy');
+  assert.match(csp, /https:\/\/health\.sassmaker\.com/);
+  assert.match(csp, /https:\/\/api\.sassmaker\.com/);
+  assert.match(csp, /https:\/\/ingest\.sassmaker\.com/);
 });
 
 test('www redirects to apex preserving path', async () => {

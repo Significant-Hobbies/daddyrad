@@ -53,8 +53,10 @@ a.app-card:hover{border-color:rgba(107,210,156,.45)}
 .principles dt{font-weight:650;font-size:18px;margin-bottom:9px}
 .principles dd{margin:0;color:var(--muted);font-size:15px}
 .site-footer{display:flex;justify-content:space-between;align-items:center;gap:18px;padding-block:30px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+.site-footer a{color:var(--mint-soft);text-decoration:underline;text-underline-offset:3px}
+.footer-capture{flex:1 1 300px;min-width:260px;color:var(--ink)}
 .site-footer p{margin:0}
-@media(max-width:800px){.apps{grid-template-columns:1fr}.principles dl{grid-template-columns:1fr;gap:25px}.site-header nav a{display:none}.hero{padding-block:64px 56px}h1{font-size:clamp(2.9rem,13vw,4rem)}}
+@media(max-width:800px){.apps{grid-template-columns:1fr}.principles dl{grid-template-columns:1fr;gap:25px}.site-header nav a{display:none}.hero{padding-block:64px 56px}h1{font-size:clamp(2.9rem,13vw,4rem)}.site-footer{align-items:flex-start;flex-direction:column}.footer-capture{width:100%}}
 </style>
 </head>
 <body>
@@ -72,25 +74,25 @@ a.app-card:hover{border-color:rgba(107,210,156,.45)}
     <p class="hero-lede">Four small apps for the things a Mac keeps to itself — what is slowing it down, what is filling it up, where your attention went, and what your coding agents can see. Local-first. No accounts. No telemetry.</p>
   </section>
   <section class="apps" id="apps">
-    <a class="app-card" href="https://performance.daddyrad.com/">
+    <a class="app-card" href="https://performance.daddyrad.com/" data-app-health-event="app.performance.opened">
       <span class="feature-number">01 · PERFORMANCE</span>
       <h2>PerformanceDaddy</h2>
       <p>See what is slowing your Mac. Inspect processes, ports, RAM and thermal evidence — and record a slowdown while it happens.</p>
       <span class="app-meta"><span class="status live">Download available</span><span class="app-domain">performance.daddyrad.com</span></span>
     </a>
-    <a class="app-card coral" href="https://storage.daddyrad.com/">
+    <a class="app-card coral" href="https://storage.daddyrad.com/" data-app-health-event="app.storage.opened">
       <span class="feature-number">02 · STORAGE</span>
       <h2>StorageDaddy</h2>
       <p>Make room. Keep building. Map where the disk went across projects, caches and dependencies, then review what to archive.</p>
       <span class="app-meta"><span class="status live">Download available</span><span class="app-domain">storage.daddyrad.com</span></span>
     </a>
-    <a class="app-card cyan" href="https://browser.daddyrad.com/">
+    <a class="app-card cyan" href="https://browser.daddyrad.com/" data-app-health-event="app.browser.opened">
       <span class="feature-number">03 · BROWSING</span>
       <h2>BrowserDaddy</h2>
       <p>See where your browsing time goes. A local, searchable archive of history plus measured foreground attention — never reconstructed private windows.</p>
       <span class="app-meta"><span class="status live">Download available</span><span class="app-domain">browser.daddyrad.com</span></span>
     </a>
-    <a class="app-card amber" id="contextdaddy" href="https://context.daddyrad.com/">
+    <a class="app-card amber" id="contextdaddy" href="https://context.daddyrad.com/" data-app-health-event="app.contextdaddy.opened">
       <span class="feature-number">04 · AGENT CONTEXT</span>
       <h2>ContextDaddy</h2>
       <p>Understand what each coding agent can see, invoke and consume — skills, project context and provenance-aware run telemetry.</p>
@@ -107,11 +109,30 @@ a.app-card:hover{border-color:rgba(107,210,156,.45)}
 </main>
 <footer class="site-footer shell">
   <p>DaddyRad — the daddy series of Mac utilities.</p>
-  <p>macOS · Signed &amp; notarized releases</p>
+  <div class="footer-capture">
+    <saas-maker-newsletter-capture
+      product-name="DaddyRad"
+      catalog-id="daddyrad"
+      kind="newsletter"
+      source="footer"
+      privacy-url="https://daddyrad.com/privacy.html"
+    ></saas-maker-newsletter-capture>
+  </div>
+  <p><a href="/privacy.html">Privacy</a> · macOS · Signed &amp; notarized releases</p>
 </footer>
 <script src="/app-health-log.js" defer></script>
+<script
+  defer
+  src="https://health.sassmaker.com/tracker.js"
+  data-key="ahk_pub_6ed8dde24c0cd8212a9e037dc4e97a271dbe05f5998ddcd43d3f815a79e9bbf9"
+  data-project="app-import-4ccfa7ec3e592eee27d325ed799c8636159f71399d4202f3dd6458fd26550828"
+  data-endpoint="https://ingest.sassmaker.com/v1/browser"
+  data-identity="session"
+></script>
 <script src="https://sassmaker.com/project-strip.js" data-project="daddyrad" defer></script>
 <script src="https://sassmaker.com/ai-chat-footer.js" data-name="DaddyRad" defer></script>
+<script type="module" src="https://sassmaker.com/newsletter-capture.js"></script>
+<script src="/app-health-events.js" defer></script>
 <script type="text/javascript">
   (function(c,l,a,r,i,t,y){
     c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
