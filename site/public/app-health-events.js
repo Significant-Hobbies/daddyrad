@@ -4,5 +4,8 @@ document.addEventListener('click', function (event) {
   var name = link && link.getAttribute('data-app-health-event');
   if (name && window.appHealth && typeof window.appHealth.track === 'function') {
     window.appHealth.track(name);
+    if (typeof window.appHealth.flush === 'function') {
+      void window.appHealth.flush();
+    }
   }
 });
