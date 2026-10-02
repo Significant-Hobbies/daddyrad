@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "release": "mcp-v0.1.0",
+  "distribution": "source-preview",
+  "engines": [
+    {
+      "directory": "performancedaddy",
+      "repository": "Significant-Hobbies/performancedaddy",
+      "revision": "439d06490d3e135942d4decc62fb96c9ddca0ced"
+    },
+    {
+      "directory": "contextdaddy",
+      "repository": "Significant-Hobbies/contextdaddy",
+      "revision": "46840971d1ead0be57c0c5f792b66a848e0a3218"
+    },
+    {
+      "directory": "storagedaddy",
+      "repository": "Significant-Hobbies/storagedaddy",
+      "revision": "44dbb36a596d102499ca8aafadc507340c10a270"
+    },
+    {
+      "directory": "browserdaddy",
+      "repository": "Significant-Hobbies/browserdaddy",
+      "revision": "82afe09470e9ab671e197db225873919b35f5b47"
+    }
+  ]
+}
