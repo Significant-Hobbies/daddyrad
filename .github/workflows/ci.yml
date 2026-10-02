@@ -6,6 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   site:
     runs-on: ubuntu-latest
@@ -21,3 +24,63 @@ jobs:
           cache-dependency-path: site/package-lock.json
       - run: npm ci
       - run: npm run check
+
+  mcp:
+    runs-on: macos-26
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: daddyrad/mcp
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          path: daddyrad
+          persist-credentials: false
+      - name: Validate pinned native engine revisions
+        id: engines
+        run: |
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          document = json.loads(Path('engine-revisions.json').read_text())
+          expected = {'performancedaddy', 'contextdaddy', 'storagedaddy', 'browserdaddy'}
+          engines = document['engines']
+          if document['schemaVersion'] != 1 or len(engines) != 4 or {e['directory'] for e in engines} != expected:
+              raise SystemExit('Unexpected native engine manifest')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              for engine in engines:
+                  name, revision = engine['directory'], engine['revision']
+                  if engine['repository'] != f'Significant-Hobbies/{name}' or not re.fullmatch('[0-9a-f]{40}', revision):
+                      raise SystemExit('Native engine requires an exact public revision')
+                  output.write(f'{name}={revision}\n')
+          PY
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: Significant-Hobbies/performancedaddy
+          ref: ${{ steps.engines.outputs.performancedaddy }}
+          path: performancedaddy
+          persist-credentials: false
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: Significant-Hobbies/contextdaddy
+          ref: ${{ steps.engines.outputs.contextdaddy }}
+          path: contextdaddy
+          persist-credentials: false
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: Significant-Hobbies/storagedaddy
+          ref: ${{ steps.engines.outputs.storagedaddy }}
+          path: storagedaddy
+          persist-credentials: false
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: Significant-Hobbies/browserdaddy
+          ref: ${{ steps.engines.outputs.browserdaddy }}
+          path: browserdaddy
+          persist-credentials: false
+      - run: swift test --filter DiagnosticsTests
+      - run: swift build -c release --product daddyrad-mcp
+      - name: Verify all four native engines over MCP
+        run: |
+          bin_dir="$(swift build -c release --show-bin-path)"
+          python3 scripts/verify-mcp.py "$bin_dir/daddyrad-mcp"
