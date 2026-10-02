@@ -19,6 +19,23 @@ export default {
     if (url.hostname === `www.${APEX}`) return Response.redirect(CANONICAL + url.pathname + url.search, 301);
     if (url.hostname !== APEX) return new Response('Not found', { status: 404 });
     const response = await env.ASSETS.fetch(request);
+    if (response.status === 404) {
+      let page = await env.ASSETS.fetch(new Request(new URL('/404.html', url.origin)));
+      // ASSETS applies HTML canonicalization even when called from the Worker.
+      // Follow only the guide's own canonical path, once, through the binding.
+      if ([301, 302, 307, 308].includes(page.status) && page.headers.has('Location')) {
+        const canonical = new URL(page.headers.get('Location'), url.origin);
+        if (canonical.origin === url.origin && ['/404', '/404/'].includes(canonical.pathname) && !canonical.search) {
+          page = await env.ASSETS.fetch(new Request(canonical));
+        }
+      }
+      if (page.ok) {
+        return secure(new Response(request.method === 'HEAD' ? null : page.body, {
+          status: 404,
+          headers: page.headers,
+        }));
+      }
+    }
     return secure(response);
   },
 };
