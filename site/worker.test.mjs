@@ -84,3 +84,15 @@ test('guide does not follow unrelated or external redirects', async () => {
     assert.equal(requests, 2);
   }
 });
+
+
+test('approved local fonts are permitted without broadening other resource origins', async () => {
+  const response = await worker.fetch(new Request('https://daddyrad.com/fonts/fleet-footer-precise-v1/geist.woff2'), env);
+  const directives = Object.fromEntries(response.headers.get('Content-Security-Policy').split(';').filter(x => x.trim()).map(x => { const [name, ...values] = x.trim().split(/\s+/); return [name, values]; }));
+  assert.deepEqual(directives['font-src'], ["'self'"]);
+  assert.deepEqual(directives['img-src'], ["'self'", 'data:']);
+  assert.deepEqual(directives['default-src'], ["'none'"]);
+  assert.deepEqual(directives['script-src'], ["'self'", 'https://sassmaker.com', 'https://health.sassmaker.com']);
+  assert.deepEqual(directives['connect-src'], ["'self'", 'https://sassmaker.com', 'https://api.sassmaker.com', 'https://ingest.sassmaker.com']);
+  for (const name of ['base-uri', 'form-action', 'frame-ancestors']) assert.deepEqual(directives[name], ["'none'"]);
+});
