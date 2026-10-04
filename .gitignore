@@ -4,3 +4,6 @@ dist/
 .DS_Store
 .build/
 .swiftpm/
+
+# Local design and release evidence
+.fleet-local/

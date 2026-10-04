@@ -57,6 +57,18 @@ a.app-card:hover{border-color:rgba(107,210,156,.45)}
 .footer-capture{flex:1 1 300px;min-width:260px;color:var(--ink)}
 .site-footer p{margin:0}
 @media(max-width:800px){.apps{grid-template-columns:1fr}.principles dl{grid-template-columns:1fr;gap:25px}.site-header nav a{display:none}.hero{padding-block:64px 56px}h1{font-size:clamp(2.9rem,13vw,4rem)}.site-footer{align-items:flex-start;flex-direction:column}.footer-capture{width:100%}}
+
+fleet-footer-extension{--fleet-footer-canvas:var(--black);--fleet-footer-lower:var(--panel);--fleet-footer-border:var(--line);--fleet-footer-focus:var(--mint-soft)}
+.precise-series-footer{min-width:0;color:var(--ink);font-size:15px}
+.series-summary{margin:0 0 28px;max-width:34ch;line-height:1.6;color:var(--muted)}
+.series-footer-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.series-footer-groups>div{min-width:0}
+.series-footer-groups h2{margin:0 0 12px;color:var(--muted);font:400 12px/1.5 var(--fleet-footer-loaded-mono,monospace)}
+.precise-series-footer .series-footer-groups a{display:flex;align-items:center;min-height:44px;width:fit-content;max-width:100%;color:var(--ink);text-decoration:none;overflow-wrap:anywhere;font-size:15px;line-height:1.5}
+.series-footer-groups a:hover{color:var(--mint-soft);text-decoration:underline;text-underline-offset:4px}
+.series-footer-groups a:focus-visible{outline:2px solid var(--mint-soft);outline-offset:4px}
+.series-footer-legal{margin:28px 0 0;color:var(--muted);font-size:12px;line-height:1.6}
+fleet-footer-extension:not(:defined){display:block;padding:32px max(24px,calc((100vw - 1120px)/2));border-top:1px solid var(--line)}
 </style>
 </head>
 <body>
@@ -107,19 +119,31 @@ a.app-card:hover{border-color:rgba(107,210,156,.45)}
     </dl>
   </section>
 </main>
-<footer class="site-footer shell">
-  <p>DaddyRad — the daddy series of Mac utilities.</p>
-  <div class="footer-capture">
-    <saas-maker-newsletter-capture
-      product-name="DaddyRad"
-      catalog-id="daddyrad"
-      kind="newsletter"
-      source="footer"
-      privacy-url="https://daddyrad.com/privacy"
-    ></saas-maker-newsletter-capture>
-  </div>
-  <p><a href="/privacy">Privacy</a> · macOS · Signed &amp; notarized releases</p>
-</footer>
+<fleet-footer-extension data-fleet-footer-project="daddyrad" product-name="DaddyRad" signature-name="DaddyRad" theme="dark" surface="landing" art-src="https://sassmaker.com/footer-art/daddyrad.webp" art-width="2170" art-height="725" art-position="50% 50%" art-alt="A local utility courtyard with four distinct inspection bays for storage, browsing, performance and agent context." art-credit="Original illustration for DaddyRad">
+    <saas-maker-newsletter-capture slot="capture" layout="compact" integrated theme="dark"
+    product-name="DaddyRad" catalog-id="daddyrad" kind="newsletter"
+    source="footer" privacy-url="https://daddyrad.com/privacy"
+  ></saas-maker-newsletter-capture>
+  <footer slot="navigation" data-fleet-footer-navigation class="precise-series-footer">
+    <p class="series-summary">DaddyRad — the daddy series of Mac utilities.</p>
+    <nav class="series-footer-groups" aria-label="DaddyRad resources">
+      <div>
+        <h2 data-fleet-footer-group-label>Mac utilities</h2>
+        <a href="https://performance.daddyrad.com">PerformanceDaddy</a>
+        <a href="https://storage.daddyrad.com">StorageDaddy</a>
+        <a href="https://browser.daddyrad.com">BrowserDaddy</a>
+        <a href="https://context.daddyrad.com">ContextDaddy</a>
+      </div>
+      <div>
+        <h2 data-fleet-footer-group-label>Resources</h2>
+        <a href="#principles">Our principles</a>
+        <a href="/privacy">Privacy</a>
+        <a href="https://github.com/Significant-Hobbies/daddyrad" target="_blank" rel="noopener noreferrer">Source and MCP preview</a>
+      </div>
+    </nav>
+    <p class="series-footer-legal" data-fleet-footer-legal>macOS · Signed &amp; notarized releases</p>
+  </footer>
+</fleet-footer-extension>
 <script src="/app-health-log.js" defer></script>
 <script
   defer
@@ -129,8 +153,8 @@ a.app-card:hover{border-color:rgba(107,210,156,.45)}
   data-endpoint="https://ingest.sassmaker.com/v1/browser"
   data-identity="session"
 ></script>
-<script src="https://sassmaker.com/project-strip.js" data-project="daddyrad" defer></script>
-<script src="https://sassmaker.com/ai-chat-footer.js" data-name="DaddyRad" defer></script>
+<script src="https://sassmaker.com/project-strip.js" data-project="daddyrad" data-theme="dark" data-layout="studio" data-host-only="true" defer></script>
+<script src="https://sassmaker.com/ai-chat-footer.js" data-name="DaddyRad" data-project="daddyrad" data-theme="dark" data-layout="question" data-host-only="true" defer></script>
 <script type="module" src="https://sassmaker.com/newsletter-capture.js"></script>
 <script src="/app-health-events.js" defer></script>
 <script type="text/javascript">
