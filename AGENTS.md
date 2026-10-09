@@ -1,5 +1,8 @@
 # DaddyRad agent instructions
 
+Retired 2026-10-09: the site moved to ios-landings `sites/daddyrad/` and `mcp/`
+moved to chatgpt-memory-insights. Make no changes or deploys here; see README.
+
 DaddyRad is the umbrella site for the daddy series of native macOS utilities.
 `mcp/` owns the single local read-only stdio server across the four native cores.
 Build it with SwiftPM from sibling app checkouts; see `mcp/README.md`. It does
